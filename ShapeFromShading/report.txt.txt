@@ -1,0 +1,38 @@
+EE 702: Assignment 1
+Shape from Shading
+
+Kalpesh Patil (130040019)
+
+I've taken 5 different values lambda,source noise, radiance noise (total 125 combinations)
+For each combination of these values depth is esimated using pq as well as fg parameters (total 250 images)
+"allSphere(2d)" and "allSphere"(3d) contain 250 images each having all the combinations
+
+"demoLambda" : images for varying lambda keeping rest of the parameters constants for 'pq' and 'fg'
+"demoSrc" : images for varying noiseSrc keeping rest of the parameters constants for 'pq' and 'fg'
+"demoRad" : images for varying noiseRad keeping rest of the parameters constants for 'pq' and 'fg'
+
+
+Later, depth is also estimated for a custom input.
+
+Observations:
+1. Effect of lambda:
+   Lambda determines regularization of the estimated function (sphere in our case). 
+   We don't observe much difference in reconstruction for 'fg' parameter by varying lambda.
+   But in case of 'pq' parameters, the reconstructions start deterioting as we reduce lambda.
+   This happens because 'fg' parameters are bounded while 'pq' parameters are not bounded at 
+   the boundary of the sphere.
+
+2. Effect of source noise (additive gaussian noise):
+   Noise was added to S0, then radiance was computed. But while reconstruction I used S0 itself.
+   This caused error in reconstructions. The sphere was observed to be shifted more and more
+   in the direction of noise as amount of noise was increased. This shift is observed to be more in 
+   case of 'pq' than 'fg', because 'pq' parameter itself is very large. When it is multilplied by 
+   noise, overall noise increases.
+
+3. Effect of Radiance Noise (additive gaussian noise):
+   Radiance was calculated normally. Then noise was added to the radiance. Esitmation was carried 
+   out using this erroneous radiance. Increasing the amount of radiance noise increased the error
+   in reconstruction. This error was less in case of 'fg' parameters than 'pq' parameters. The reason 
+   being the same due to more amplification of noise in case of 'pq' than 'fg'.
+
+ 
